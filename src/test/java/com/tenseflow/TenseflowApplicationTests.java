@@ -1,4 +1,4 @@
-package com.tenseflow.tenseflow;
+package com.tenseflow;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
