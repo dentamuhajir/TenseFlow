@@ -33,6 +33,10 @@ public class PartOfSpeechService {
         System.out.println("Random part of speech is " + getPartOfSpeech);
     }
 
+    void readFile() {
+
+    }
+
     HashMap<String, String> listPartOfSpeech() {
         HashMap<String, String> listDataset = new HashMap<>();
         listDataset.put("Adjective" , "adjective.txt");
