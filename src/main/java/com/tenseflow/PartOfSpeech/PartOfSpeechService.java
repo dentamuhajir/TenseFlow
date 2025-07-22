@@ -1,8 +1,14 @@
 package com.tenseflow.PartOfSpeech;
 
+import org.springframework.core.io.ClassPathResource;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,22 +37,45 @@ public class PartOfSpeechService {
         }
 
         System.out.println("Random part of speech is " + getPartOfSpeech);
+
+        List<String> listWord = readFile(getFile);
+
+        for(String list: listWord ){
+            System.out.println(list);
+        }
     }
 
-    void readFile() {
+    public List<String> readFile(String randomFile) {
+        List<String> adjectives = new ArrayList<>();
 
+        try {
+            ClassPathResource resource = new ClassPathResource("dataset/kaggle/part_of_speech_collection/" + randomFile);
+            InputStream inputStream = resource.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                adjectives.add(line.trim());
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace(); // You can use proper logging
+        }
+
+        return adjectives;
     }
 
     HashMap<String, String> listPartOfSpeech() {
         HashMap<String, String> listDataset = new HashMap<>();
         listDataset.put("Adjective" , "adjective.txt");
         listDataset.put("Adverb", "adverb.txt");
-        listDataset.put("Conjunction", "conjuction.txt");
+        listDataset.put("Conjunction", "conjunction.txt");
         listDataset.put("Interjections", "Interjections.txt");
         listDataset.put("Noun", "noun.txt");
         listDataset.put("Preposition", "preposition.txt");
         listDataset.put("Pronoun", "pronoun.txt");
-        listDataset.put("Verb", "verbs.csv");
+        listDataset.put("Verb", "verbs.txt");
         return listDataset;
     }
 }
