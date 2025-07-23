@@ -31,18 +31,29 @@ public class PartOfSpeechService {
             if(index.equals(randomNumber)){
               getPartOfSpeech = entry.getKey();
               getFile = entry.getValue();
+              break;
             }
 
             index++;
         }
 
-        System.out.println("Random part of speech is " + getPartOfSpeech);
+        //System.out.println("Random part of speech is " + getPartOfSpeech);
 
         List<String> listWord = readFile(getFile);
 
+        int totalWord = listWord.size();
+        Integer randomWord = (int) (Math.random() * totalWord) + 1;
+        Integer indexWord = 1;
+        String word = "";
         for(String list: listWord ){
-            System.out.println(list);
+            if(indexWord.equals(randomWord)) {
+                word = list;
+            }
+            indexWord++;
+            //System.out.println(list);
         }
+
+        System.out.println("Word : " + word + " | " + getPartOfSpeech);
     }
 
     public List<String> readFile(String randomFile) {
@@ -75,7 +86,7 @@ public class PartOfSpeechService {
         listDataset.put("Noun", "noun.txt");
         listDataset.put("Preposition", "preposition.txt");
         listDataset.put("Pronoun", "pronoun.txt");
-        listDataset.put("Verb", "verbs.txt");
+        listDataset.put("Verb", "verb.txt");
         return listDataset;
     }
 }
