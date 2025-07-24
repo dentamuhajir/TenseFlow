@@ -3,6 +3,7 @@ package com.tenseflow.PartOfSpeech;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,13 @@ public class PartOfSpeechController {
     public ResponseEntity<?> generate(){
         partOfSpeechService.generateWord();
         return ResponseEntity.ok("it works");
+    }
+
+    @GetMapping(value = "/analyze")
+    public ResponseEntity<?> analyzePOS() {
+        partOfSpeechService.analyzePOS();
+        return  ResponseEntity.ok("analyze");
+
     }
 
 }

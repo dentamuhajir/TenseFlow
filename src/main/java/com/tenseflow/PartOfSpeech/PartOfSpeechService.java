@@ -1,5 +1,10 @@
 package com.tenseflow.PartOfSpeech;
 
+import com.tenseflow.npl.standford.Pipeline;
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.pipeline.CoreDocument;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import org.springframework.core.io.ClassPathResource;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,6 +18,21 @@ import java.util.Map;
 
 @Service
 public class PartOfSpeechService {
+
+    void analyzePOS() {
+        StanfordCoreNLP stanfordCoreNLP = Pipeline.getPipeline();
+        String text = "Hey, i am learning Natural Language Processing use Java";
+        CoreDocument coreDocument = new CoreDocument(text);
+        stanfordCoreNLP.annotate(coreDocument);
+        List<CoreLabel> coreLabelList = coreDocument.tokens();
+
+        for(CoreLabel coreLabel: coreLabelList){
+            String pos = coreLabel.get(CoreAnnotations.PartOfSpeechAnnotation.class);
+            System.out.println(coreLabel.originalText() + " = " + pos);
+        }
+
+    }
+
 
     void generateWord(){
 
