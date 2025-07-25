@@ -40,7 +40,7 @@ public class PartOfSpeechService {
         stanfordCoreNLP.annotate(coreDocument);
         List<CoreLabel> coreLabelList = coreDocument.tokens();
 
-        Map<String, String> partOfSpeech = new HashMap<>();
+        Map<String, String> partOfSpeech = new LinkedHashMap<>();
 
         for(CoreLabel coreLabel: coreLabelList){
             String pos = coreLabel.get(CoreAnnotations.PartOfSpeechAnnotation.class);
