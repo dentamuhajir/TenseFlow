@@ -5,16 +5,16 @@ import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.util.CoreMap;
 import org.springframework.core.io.ClassPathResource;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+// https://stanfordnlp.github.io/CoreNLP/api.html
 
 @Service
 public class PartOfSpeechService {
@@ -32,6 +32,22 @@ public class PartOfSpeechService {
             POSTagger(pos);
         }
 
+    }
+
+    public Map<String, String> generatePartOfSpeech(String sentence) {
+        StanfordCoreNLP stanfordCoreNLP = Pipeline.getPipeline();
+        CoreDocument coreDocument = new CoreDocument(sentence);
+        stanfordCoreNLP.annotate(coreDocument);
+        List<CoreLabel> coreLabelList = coreDocument.tokens();
+
+        Map<String, String> partOfSpeech = new HashMap<>();
+
+        for(CoreLabel coreLabel: coreLabelList){
+            String pos = coreLabel.get(CoreAnnotations.PartOfSpeechAnnotation.class);
+            partOfSpeech.put(coreLabel.originalText(), pos);
+        }
+
+        return partOfSpeech;
     }
 
     void POSTagger(String tagCode) {
